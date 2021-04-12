@@ -1,8 +1,9 @@
+#!/usr/bin/env node
 const axios = require('axios');
 
 const playsound = () => {
     const play = require('play');
-    play.sound('node_modules/play/wavs/sfx/intro.wav', () => {});
+    play.sound(__dirname+'/node_modules/play/wavs/sfx/intro.wav', () => {});
 }
 
 const getAllStores = (zipcode) => {
@@ -23,7 +24,7 @@ const checkStoreForSlot = async (store) => {
     return axios.get(url)
     .then(
       ({data}) => {
-        console.log(`Checking: ${storeNumber} - ${address}, ${city}`);
+        console.log(`------Checking: ${storeNumber} - ${address}, ${city}`);
         if(data.Data.slots["1"] && !data.Data.slots["2"]){
             // console.log(`FOUND A SLOT AT: ${storeNumber} - ${address}, ${city}`, data.Data.slots);
             return store;
@@ -52,4 +53,5 @@ const main = async () => {
         playsound();
 };
 
+main();
 setInterval(main, 30000);
